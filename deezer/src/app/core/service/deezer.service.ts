@@ -9,8 +9,14 @@ export class DeezerService {
 
   constructor(private _http:HttpClient) { }
 
-  getArtists(){
-    return this._http.get(environment.deezerURL +'search?q=eminem',
+  getArtists(artistName){
+    return this._http.get(environment.deezerURL +'search?q=' + artistName,
+    {observe:'body'
+    });
+  }
+
+  getChart(){
+    return this._http.get(environment.deezerURL +'chart',
     {observe:'body'
     });
   }

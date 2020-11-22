@@ -19,24 +19,29 @@ export class SearchComponent implements OnInit{
   constructor(private _service:DeezerService) {}
 
   ngOnInit(){
-    this._service.getArtists().subscribe(
-      data => this.artistList(Array.of(data))
-    )
+    this.searchArtistForm.valueChanges.subscribe(searchItem => {
+      this._service.getArtists(searchItem).subscribe(
+        searchResponse => this.artistList(Array.of(searchResponse))
+      )
+    })
   }
 
-  artistList(data){
-    this.artists = data[0].data;
+  artistList(searchResponse){
+    this.artists = searchResponse[0].data;
     this.filteredArtists = this.searchArtistForm.valueChanges.pipe(
       startWith(''),
       map(value =>this.filter(value))
     );
   }
 
+  filter(filterValue){
+    return this.artists.filter(option => option.artist.name.includes(filterValue));
+  }
+
   displaySelection(selection){
     return (selection && selection.artist.name) ? selection.artist.name : '';
   }
 
-  filter(filterValue){
-    return this.artists.filter(option => option.artist.name.includes(filterValue));
-  }
+  
+
 }
