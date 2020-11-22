@@ -5,6 +5,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [],
@@ -15,7 +17,9 @@ import {MatCardModule} from '@angular/material/card';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    MatDividerModule,
+    MatListModule
   ],
   exports: [
     CommonModule,
@@ -24,7 +28,9 @@ import {MatCardModule} from '@angular/material/card';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    MatDividerModule,
+    MatListModule
   ]
 })
 export class MaterialModule { }

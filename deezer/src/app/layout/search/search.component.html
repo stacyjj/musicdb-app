@@ -7,9 +7,9 @@
             placeholder="Select Artist"
             aria-label="Select Artist"
             [formControl]="searchArtistForm"
-            [matAutocomplete]="autoArtistSearch" >
+            [matAutocomplete]="autoArtistSearch">
             <mat-autocomplete #autoArtistSearch="matAutocomplete" [displayWith]="displaySelection"> 
-            <mat-option *ngFor="let artistInfo of filteredArtists | async" [value]="artistInfo">
+            <mat-option *ngFor="let artistInfo of filteredArtists | async" [value]="artistInfo" (click)="artistSelection(artistInfo)">
                 <img class="search-img" aria-hidden [src]="artistInfo.artist.picture_small">
                 <span>{{artistInfo.artist.name}}</span> |
                 <small>Album: {{artistInfo.album.title}}</small>

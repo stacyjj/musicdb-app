@@ -8,6 +8,11 @@ import { environment } from '../../../environments/environment';
 export class DeezerInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    if(request.method === 'GET' && request.url === environment.deezerURL +'chart/0/tracks') {
+      return next.handle(request);
+    }
+
     if(request.method === 'GET' && request.url.indexOf(environment.deezerURL +'search?q=') > -1) {
       return next.handle(request);
     }
@@ -16,7 +21,7 @@ export class DeezerInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
     
-    if(request.method === 'GET' && request.url === environment.deezerURL +'chart/0/tracks') {
+    if(request.method === 'GET' && request.url.indexOf(environment.deezerURL +'/top') > -1) {
       return next.handle(request);
     }
   }

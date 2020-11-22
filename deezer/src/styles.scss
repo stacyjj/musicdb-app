@@ -1,4 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+$contentmargin: 2% 5%;
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.content {
+    margin: $contentmargin;
+}
+
+.align-top{
+    padding-top: 2%;
+}
+
+.align-bottom{
+    padding-bottom: 5%;
+}
