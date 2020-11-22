@@ -4,10 +4,11 @@
             <input 
             matInput
             type="text"
-            placeholder="Select Artist"
+            placeholder=" Select Artist"
             aria-label="Select Artist"
             [formControl]="searchArtistForm"
             [matAutocomplete]="autoArtistSearch">
+            <mat-icon  matPrefix aria-hidden="false" aria-label="Search artist">search</mat-icon>
             <mat-autocomplete #autoArtistSearch="matAutocomplete" [displayWith]="displaySelection"> 
             <mat-option *ngFor="let artistInfo of filteredArtists | async" [value]="artistInfo" (click)="artistSelection(artistInfo)">
                 <img class="search-img" aria-hidden [src]="artistInfo.artist.picture_small">
