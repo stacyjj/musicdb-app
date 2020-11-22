@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit{
   }
 
   displaySelection(selection){
-    return (selection && selection.value) ? selection.value : '';
+    return (selection && selection.artist.name) ? selection.artist.name : '';
   }
 
   filter(filterValue){
