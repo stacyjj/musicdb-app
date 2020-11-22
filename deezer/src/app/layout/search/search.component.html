@@ -1,0 +1,17 @@
+
+    <div fxLayout="row" class="search">
+        <mat-form-field fxFlex>
+            <input 
+            matInput
+            type="text"
+            placeholder="Select Artist"
+            aria-label="Select Artist"
+            [formControl]="searchArtistForm"
+            [matAutocomplete]="autoArtistSearch" >
+            <mat-autocomplete #autoArtistSearch="matAutocomplete" [displayWith]="displaySelection"> 
+            <mat-option *ngFor="let artistInfo of filteredArtists | async" [value]="artistInfo">
+                {{artistInfo.artist.name}}
+            </mat-option>
+            </mat-autocomplete>
+        </mat-form-field> 
+    </div>

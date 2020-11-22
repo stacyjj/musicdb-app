@@ -8,21 +8,29 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './core/material.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { LandingPageComponent } from './layout/landing-page/landing-page.component';
+import { SearchComponent } from './layout/search/search.component';
+import {DeezerInterceptor} from './core/service/deezer.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:DeezerInterceptor, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
