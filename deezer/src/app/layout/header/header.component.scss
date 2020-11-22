@@ -1,19 +1,8 @@
 
-$mainmargin: 2%;
-
-.header {
-    margin: $mainmargin;
-}
-
-.header-logo{
+.header{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.header-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
  
