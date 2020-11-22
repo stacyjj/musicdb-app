@@ -15,8 +15,14 @@ export class DeezerService {
     });
   }
 
+  getNoOfArtists(artistId){
+    return this._http.get(environment.deezerURL +'artist/' + artistId,
+    {observe:'body'
+    });
+  }
+
   getChart(){
-    return this._http.get(environment.deezerURL +'chart',
+    return this._http.get(environment.deezerURL +'chart/0/tracks',
     {observe:'body'
     });
   }

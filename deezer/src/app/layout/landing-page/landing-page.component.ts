@@ -9,17 +9,32 @@ import { DeezerService } from 'src/app/core/service/deezer.service';
 export class LandingPageComponent implements OnInit {
 
   chartData = [];
+  noOfFansData = null;
+  displayData = [];
 
   constructor(private _service:DeezerService) { }
 
   ngOnInit(): void {
     this._service.getChart().subscribe(
-      data => this.chartDataList(Array.of(data))
+      chartData => this.chartDataList(Array.of(chartData))
     )
   }
 
-  chartDataList(data){
-    this.chartData = data[0].data;
+  chartDataList(chartData){
+    this.chartData = chartData[0].data;
+    this.chartData.forEach(element => {
+      this._service.getNoOfArtists(element.artist.id).subscribe(
+        fanData => {
+          this.noOfFansData = fanData;
+          this.displayData.push({
+            img: element.artist.picture_medium,
+            artistName:element.artist.name,
+            noOfFans:  this.noOfFansData.nb_fan
+          })
+        }
+      )
+    })
+    console.log(this.displayData);
   }
 
 }

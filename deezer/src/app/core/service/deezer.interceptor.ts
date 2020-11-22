@@ -11,8 +11,12 @@ export class DeezerInterceptor implements HttpInterceptor {
     if(request.method === 'GET' && request.url.indexOf(environment.deezerURL +'search?q=') > -1) {
       return next.handle(request);
     }
+
+    if(request.method === 'GET' && request.url.indexOf(environment.deezerURL +'artist/') > -1) {
+      return next.handle(request);
+    }
     
-    if(request.method === 'GET' && request.url === environment.deezerURL +'chart') {
+    if(request.method === 'GET' && request.url === environment.deezerURL +'chart/0/tracks') {
       return next.handle(request);
     }
   }
