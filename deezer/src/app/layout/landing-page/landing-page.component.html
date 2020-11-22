@@ -1,4 +1,18 @@
 <div class="content">
-    <p>landing-page works!</p>
+    <div fxLayout="row wrap" fxLayoutGap="5% grid">
+        <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let cardItem of displayData">
+            <mat-card class="card mat-elevation-z4">
+                <mat-card-header>
+                  <mat-card-title>{{cardItem.coverTitle}}</mat-card-title>
+                  <mat-card-subtitle>Album</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src={{cardItem.artistImg}} alt="Photo of a Artist">
+                <mat-card-content>
+                  <h2>{{cardItem.artistName}}</h2>
+                  <h2>{{cardItem.noOfFans}} Fans</h2>
+                </mat-card-content>
+              </mat-card>
+        </div>
+    </div>
 </div>
 

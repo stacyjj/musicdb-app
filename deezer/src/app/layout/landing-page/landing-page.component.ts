@@ -27,7 +27,9 @@ export class LandingPageComponent implements OnInit {
         fanData => {
           this.noOfFansData = fanData;
           this.displayData.push({
-            img: element.artist.picture_medium,
+            coverTitle: element.album.title,
+            coverImg: element.album.cover_xl,
+            artistImg: element.artist.picture_medium,
             artistName:element.artist.name,
             noOfFans:  this.noOfFansData.nb_fan
           })
