@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit{
   ngOnInit(){
     this.searchArtistForm.valueChanges.subscribe(searchItem => {
       this._service.getArtists(searchItem).subscribe(
-        searchResponse => this.artistList(Array.of(searchResponse))
+        searchResponse => searchItem? this.artistList(Array.of(searchResponse)):''
       )
     })
   }
@@ -38,9 +38,7 @@ export class SearchComponent implements OnInit{
   }
 
   filter(filterValue){
-    
       return this.artists.filter(option =>option.artist.name.includes(filterValue));
-    
   }
 
   displaySelection(selection){
@@ -57,13 +55,15 @@ export class SearchComponent implements OnInit{
             selectedArtist.noOfFans = this.noOfFansData.nb_fan;
             selectedArtist.topTracks = this.toptracks.data;
             console.log(selectedArtist);
+            this.router.routeReuseStrategy.shouldReuseRoute = function () {
+              return false;
+          }
+            this.router.onSameUrlNavigation = 'reload';
             this.router.navigate(["artist"],  { state: selectedArtist });
           }
         )
       }
     )
   }
-
-  
 
 }
