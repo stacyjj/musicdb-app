@@ -10,10 +10,10 @@
               </div>
         </div>
         <div fxFlex="40%" fxFlex.xs="33%" fxFlex.sm="33%">
-            <h1>Top Tracks</h1>
+            <h1><b>Top Tracks</b></h1>
             <div *ngIf="artistDetails.topTracks.length > 0">
-              <mat-list *ngFor="let topItem of artistDetails.topTracks; index as i">
-                  <mat-list-item class="list">{{i+1}}.{{topItem.title}}</mat-list-item>
+              <mat-list *ngFor="let topItem of artistDetails.topTracks; index as i" class="align-bottom">
+                  <mat-list-item class="list">{{i+1}}. {{topItem.title}}</mat-list-item>
                   <mat-divider></mat-divider>
               </mat-list>
             </div>
