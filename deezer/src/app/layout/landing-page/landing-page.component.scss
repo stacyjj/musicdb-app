@@ -1,5 +1,7 @@
 $card-width: 400px;
+$card-select: pointer;
 
 .card{
     max-width: $card-width;
+    cursor: $card-select;
 }

@@ -1,7 +1,7 @@
 <div class="content">
     <div fxLayout="row wrap" fxLayoutGap="5% grid">
         <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let cardItem of displayData">
-            <mat-card class="card mat-elevation-z4">
+            <mat-card class="card mat-elevation-z4" (click)="artistSelection(cardItem)">
                 <mat-card-header>
                   <mat-card-title>{{cardItem.coverTitle}}</mat-card-title>
                   <mat-card-subtitle>Album</mat-card-subtitle>
