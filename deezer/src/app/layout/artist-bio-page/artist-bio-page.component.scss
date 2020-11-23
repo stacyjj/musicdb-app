@@ -2,7 +2,6 @@ $main-width: 100%;
 $main-color: white;
 $container-position: relative;
 $container-text: center;
-$container-position: relative;
 $heading-position: absolute;
 $heading-bottom: 0;
 $heading-transparency: rgba(0, 0, 0, 0.5);
@@ -24,4 +23,5 @@ $list-text: 1vw;
 
 .list{
     font-size:$list-text;
+    justify-content: $container-text;
 }

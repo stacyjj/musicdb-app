@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
+
 export class SearchComponent implements OnInit{
 
   searchArtistForm = new FormControl();
@@ -18,15 +19,22 @@ export class SearchComponent implements OnInit{
   artists = [];
   noOfFansData = null;
   toptracks = null;
+  albumDate = null;
+  bioDisplayData = {
+    artistName: '',
+    noOfFans: '',
+    artistImg: '',
+    topTracks: null
+  };
 
-  constructor(private _service:DeezerService, private router : Router) {}
+  constructor(private _service: DeezerService, private router : Router) {}
 
-  ngOnInit(){
+  ngOnInit(): void{
     this.searchArtistForm.valueChanges.subscribe(searchItem => {
       this._service.getArtists(searchItem).subscribe(
-        searchResponse => searchItem? this.artistList(Array.of(searchResponse)):''
-      )
-    })
+        searchResponse => searchItem ? this.artistList(Array.of(searchResponse)) : ''
+      );
+    });
   }
 
   artistList(searchResponse){
@@ -38,7 +46,7 @@ export class SearchComponent implements OnInit{
   }
 
   filter(filterValue){
-      return this.artists.filter(option =>option.artist.name.includes(filterValue));
+      return this.artists.filter(option => option.artist.name.includes(filterValue));
   }
 
   displaySelection(selection){
@@ -46,24 +54,51 @@ export class SearchComponent implements OnInit{
   }
 
   artistSelection(selectedArtist){
-    this._service.getNoOfArtists(selectedArtist.artist.id).subscribe(
+    this._service.getNoOfFans(selectedArtist.artist.id).subscribe(
       fanData => {
         this.noOfFansData = fanData;
         this._service.getTopTracks(selectedArtist.artist.id).subscribe(
-          topTrackData =>{
+          topTrackData => {
             this.toptracks = topTrackData;
-            selectedArtist.noOfFans = this.noOfFansData.nb_fan;
-            selectedArtist.topTracks = this.toptracks.data;
-            console.log(selectedArtist);
-            this.router.routeReuseStrategy.shouldReuseRoute = function () {
-              return false;
+            this.bioDisplayData.artistName = selectedArtist.artist.name;
+            this.bioDisplayData.noOfFans = this.noOfFansData.nb_fan;
+            this.bioDisplayData.artistImg = selectedArtist.artist.picture_big;
+            this.bioDisplayData.topTracks = this.toptracks.data;
+            this.getAlbumReleaseDates(this.bioDisplayData);
           }
-            this.router.onSameUrlNavigation = 'reload';
-            this.router.navigate(["artist"],  { state: selectedArtist });
-          }
-        )
+        );
       }
-    )
+    );
+  }
+
+  getTime(time){
+    var date = new Date(time*1000);
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    return (`${hours}:${minutes}:${seconds}`);
+  }
+
+  getAlbumReleaseDates(selectedArtistDetails){
+    selectedArtistDetails.topTracks.forEach((element, index) => {
+      this._service.getAlbumReleaseDate(element.album.id).subscribe(
+        albumDate => {
+          this.albumDate = albumDate;
+          selectedArtistDetails.topTracks[index].duration = this.getTime(selectedArtistDetails.topTracks[index].duration);
+          selectedArtistDetails.topTracks[index].releaseDate = this.albumDate.release_date;
+          console.log(selectedArtistDetails);
+        });
+    });
+    this.loadBioPage(selectedArtistDetails);
+  }
+
+
+  loadBioPage(artistInfo){
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    }
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(["artist"],  { state: artistInfo });
   }
 
 }
