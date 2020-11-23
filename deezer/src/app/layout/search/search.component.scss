@@ -1,9 +1,10 @@
-$searchmargin: 2% 5%;
+$search-margin: 2% 5%;
+$margin-right: 1%;
 
 .search {
-    margin: $searchmargin;
+    margin: $search-margin;
 }
 
 .search-img {
-    margin-right: 1%;
-  }
+    margin-right: $margin-right;
+}

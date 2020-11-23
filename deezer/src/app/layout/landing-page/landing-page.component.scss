@@ -1,4 +1,5 @@
+$card-width: 400px;
 
 .card{
-    max-width: 400px;
-  }
+    max-width: $card-width;
+}

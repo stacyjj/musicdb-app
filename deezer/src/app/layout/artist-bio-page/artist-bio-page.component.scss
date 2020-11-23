@@ -1,26 +1,27 @@
+$main-width: 100%;
+$main-color: white;
+$container-position: relative;
+$container-text: center;
+$container-position: relative;
+$heading-position: absolute;
+$heading-bottom: 0;
+$heading-transparency: rgba(0, 0, 0, 0.5);
+$list-text: 1vw;
+
 .container {
-    position: relative;
-    text-align: center;
-    color: white;
-  }
-  .example-card {
-    max-width: 400px;
-  }
-  .top-left-h1 {
-    position: absolute;
-    bottom: 0;
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.5); 
-    color: #f1f1f1;
-    width: 100%;
-  }
-  .top-left-h2 {
-    position: absolute;
-    top: 30%;
-    left: 8%;
-    font-size:2.5vw;
-    text-decoration: underline;
-  }
-  .list{
-    font-size:1vw;
-  }
+    position: $container-position;
+    text-align: $container-text;
+    color: $main-color;
+}
+ 
+.top-left-h1 {
+    position: $heading-position;
+    bottom: $heading-bottom;
+    background: $heading-transparency; 
+    color: $main-color;
+    width: $main-width;
+}
+
+.list{
+    font-size:$list-text;
+}

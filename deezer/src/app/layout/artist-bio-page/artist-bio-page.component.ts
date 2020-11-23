@@ -14,11 +14,8 @@ export class ArtistBioPageComponent implements OnInit {
     this.artistDetails = this.router.getCurrentNavigation().extras.state;
   }
 
-  ngOnInit(){
+  ngOnInit(): void{
     console.log(this.artistDetails);
   }
-
-  
-
 
 }

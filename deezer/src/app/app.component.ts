@@ -8,38 +8,11 @@ import { Subscription } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AppComponent implements OnInit {
   
-  artistSelctionControl = new FormControl();
-  artistOptions: string[] = ['Ed Shereen', 'Sam Smith', 'Black Coffee']
+  constructor(){}
 
-
-  private mediaSubscription: Subscription;
-  constructor(
-    private cdRef: ChangeDetectorRef,
-    private mediaObserver: MediaObserver,
-  ){
-
-  }
-
-  ngOnInit(){
-
-    this.mediaSubscription = this.mediaObserver.media$.subscribe(
-      (change:MediaChange)=>{
-        console.log(change.mqAlias);
-        console.log(change.mediaQuery);
-      }
-    );
-  }
-
-  ngAfterViewInit(){
-
-  }
-
-  ngOnDestroy (){
-    if(this.mediaSubscription){
-        this.mediaSubscription.unsubscribe();
-    }
+  ngOnInit(): void{
   }
 
 }

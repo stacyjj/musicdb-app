@@ -1,12 +1,15 @@
+$header-display: flex;
+$header-align: center;
+$header-select: pointer;
 
 .header{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: $header-display;
+    align-items: $header-align;
+    justify-content: $header-align;
 }
 
 .home-icon{
-    cursor: pointer;
+    cursor: $header-select;
 }
 
  

@@ -14,16 +14,16 @@ export class LandingPageComponent implements OnInit {
 
   constructor(private _service:DeezerService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void{
     this._service.getChart().subscribe(
       chartData => this.chartDataList(Array.of(chartData))
-    )
+    );
   }
 
   chartDataList(chartData){
     this.chartData = chartData[0].data;
     this.chartData.forEach(element => {
-      this._service.getNoOfArtists(element.artist.id).subscribe(
+      this._service.getNoOfFans(element.artist.id).subscribe(
         fanData => {
           this.noOfFansData = fanData;
           this.displayData.push({
@@ -32,10 +32,10 @@ export class LandingPageComponent implements OnInit {
             artistImg: element.artist.picture_medium,
             artistName:element.artist.name,
             noOfFans:  this.noOfFansData.nb_fan
-          })
+          });
         }
-      )
-    })
+      );
+    });
     console.log(this.displayData);
   }
 
