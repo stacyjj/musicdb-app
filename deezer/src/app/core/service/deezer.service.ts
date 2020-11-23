@@ -28,7 +28,7 @@ export class DeezerService {
   }
   
   getTopTracks(artistId){
-    return this._http.get(environment.deezerURL +'artist/'+artistId+'/top',
+    return this._http.get(environment.deezerURL +'artist/'+ artistId +'/top',
     {observe:'body'
     });
   }
