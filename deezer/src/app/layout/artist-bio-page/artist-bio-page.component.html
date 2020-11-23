@@ -34,6 +34,9 @@
     <div fxLayout="row" class="align-bottom">
       <h1><b>Albums</b></h1>
     </div>
+    <div *ngIf="artistDetails.topTracks.length === 0">
+      <h2>No Information Available</h2>
+    </div>
     <div fxLayout="row wrap" fxLayoutGap="5% grid">
       <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let cardItem of artistDetails.topTracks">
           <mat-card class="card mat-elevation-z4">

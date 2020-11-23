@@ -8,11 +8,12 @@ import { MaterialModule } from './core/material.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { LandingPageComponent } from './layout/landing-page/landing-page.component';
 import { SearchComponent } from './layout/search/search.component';
-import {DeezerInterceptor} from './core/service/deezer.interceptor';
+import { DeezerInterceptor } from './core/service/deezer-api/deezer.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ArtistBioPageComponent } from './layout/artist-bio-page/artist-bio-page.component';
 import { RouterModule, Routes } from '@angular/router';
+import { EventEmitterService } from './core/service/common/event-emitter.service';
 
 const appRoutes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -37,7 +38,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS, useClass:DeezerInterceptor, multi:true}
+    {provide:HTTP_INTERCEPTORS, useClass:DeezerInterceptor, multi:true},
+    EventEmitterService
   ],
   bootstrap: [AppComponent]
 })

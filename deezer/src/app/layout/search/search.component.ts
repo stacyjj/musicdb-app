@@ -2,8 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { DeezerService } from 'src/app/core/service/deezer.service';
+import { DeezerService } from 'src/app/core/service/deezer-api/deezer.service';
 import { Router } from '@angular/router';
+import {EventEmitterService} from 'src/app/core/service/common/event-emitter.service';
+
 
 @Component({
   selector: 'app-search',
@@ -27,7 +29,7 @@ export class SearchComponent implements OnInit{
     topTracks: null
   };
 
-  constructor(private _service: DeezerService, private router : Router) {}
+  constructor(private _service: DeezerService, private router : Router, private eventEmitterService: EventEmitterService ) {}
 
   ngOnInit(): void{
     this.searchArtistForm.valueChanges.subscribe(searchItem => {
@@ -35,6 +37,13 @@ export class SearchComponent implements OnInit{
         searchResponse => searchItem ? this.artistList(Array.of(searchResponse)) : ''
       );
     });
+
+    if (this.eventEmitterService.subsVar==undefined) {    
+      this.eventEmitterService.subsVar = this.eventEmitterService.    
+      invokeGetArtistBioFunction.subscribe((artist) => {    
+        this.artistSelection(artist);    
+      });    
+    }   
   }
 
   artistList(searchResponse){
@@ -53,20 +62,26 @@ export class SearchComponent implements OnInit{
     return (selection && selection.artist.name) ? selection.artist.name : '';
   }
 
+
   artistSelection(selectedArtist){
-    this._service.getNoOfFans(selectedArtist.artist.id).subscribe(
-      fanData => {
-        this.noOfFansData = fanData;
-        this._service.getTopTracks(selectedArtist.artist.id).subscribe(
-          topTrackData => {
-            this.toptracks = topTrackData;
-            this.bioDisplayData.artistName = selectedArtist.artist.name;
-            this.bioDisplayData.noOfFans = this.noOfFansData.nb_fan;
-            this.bioDisplayData.artistImg = selectedArtist.artist.picture_big;
-            this.bioDisplayData.topTracks = this.toptracks.data;
-            this.getAlbumReleaseDates(this.bioDisplayData);
-          }
-        );
+    this._service.getTopTracks(selectedArtist.artistId?selectedArtist.artistId:selectedArtist.artist.id).subscribe(
+      topTrackData => {
+        this.toptracks = topTrackData;
+        this.bioDisplayData.artistName = selectedArtist.artistName?selectedArtist.artistName:selectedArtist.artist.name;
+        this.bioDisplayData.artistImg = selectedArtist.artistImg?selectedArtist.artistImg:selectedArtist.artist.picture_big;
+        this.bioDisplayData.topTracks = this.toptracks.data;
+        if(!selectedArtist.noOfFans){
+          this._service.getNoOfFans(selectedArtist.artist.id).subscribe(
+            fanData => {
+              this.noOfFansData = fanData;
+              this.bioDisplayData.noOfFans = this.noOfFansData.nb_fan;
+              this.getAlbumReleaseDates(this.bioDisplayData);
+            }
+          );
+        }else{
+          this.bioDisplayData.noOfFans =  selectedArtist.noOfFans;
+          this.getAlbumReleaseDates(this.bioDisplayData);
+        }
       }
     );
   }
@@ -86,7 +101,6 @@ export class SearchComponent implements OnInit{
           this.albumDate = albumDate;
           selectedArtistDetails.topTracks[index].duration = this.getTime(selectedArtistDetails.topTracks[index].duration);
           selectedArtistDetails.topTracks[index].releaseDate = this.albumDate.release_date;
-          console.log(selectedArtistDetails);
         });
     });
     this.loadBioPage(selectedArtistDetails);

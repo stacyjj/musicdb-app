@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DeezerService } from 'src/app/core/service/deezer.service';
+import { DeezerService } from 'src/app/core/service/deezer-api/deezer.service';
+import {EventEmitterService} from 'src/app/core/service/common/event-emitter.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -12,7 +13,7 @@ export class LandingPageComponent implements OnInit {
   noOfFansData = null;
   displayData = [];
 
-  constructor(private _service:DeezerService) { }
+  constructor(private _service: DeezerService, private eventEmitterService: EventEmitterService) { }
 
   ngOnInit(): void{
     this._service.getChart().subscribe(
@@ -37,7 +38,10 @@ export class LandingPageComponent implements OnInit {
         }
       );
     });
-    console.log(this.displayData);
   }
+
+  artistSelection(artistDetails){    
+    this.eventEmitterService.getArtistBio(artistDetails);    
+  }  
 
 }

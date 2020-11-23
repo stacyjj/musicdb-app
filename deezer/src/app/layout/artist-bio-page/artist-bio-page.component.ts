@@ -15,7 +15,6 @@ export class ArtistBioPageComponent implements OnInit {
   }
 
   ngOnInit(): void{
-    console.log(this.artistDetails);
   }
 
 }
