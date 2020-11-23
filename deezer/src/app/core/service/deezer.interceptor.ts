@@ -24,5 +24,9 @@ export class DeezerInterceptor implements HttpInterceptor {
     if(request.method === 'GET' && request.url.indexOf(environment.deezerURL +'/top') > -1) {
       return next.handle(request);
     }
+
+    if(request.method === 'GET' && request.url.indexOf(environment.deezerURL +'/album') > -1) {
+      return next.handle(request);
+    }
   }
 }
