@@ -31,6 +31,7 @@ export class LandingPageComponent implements OnInit {
             coverImg: element.album.cover_xl,
             artistImg: element.artist.picture_medium,
             artistName:element.artist.name,
+            artistId: element.artist.id,
             noOfFans:  this.noOfFansData.nb_fan
           });
         }
