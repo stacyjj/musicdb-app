@@ -14,10 +14,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ArtistBioPageComponent } from './layout/artist-bio-page/artist-bio-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { EventEmitterService } from './core/service/common/event-emitter.service';
+import { ErrorPageComponent } from './layout/error-page/error-page.component';
 
 const appRoutes: Routes = [
   { path: '', component: LandingPageComponent },
-  { path: 'artist', component: ArtistBioPageComponent }
+  { path: 'artist', component: ArtistBioPageComponent },
+  { path: 'error', component: ErrorPageComponent }
 ];
 
 @NgModule({
@@ -26,7 +28,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     LandingPageComponent,
     SearchComponent,
-    ArtistBioPageComponent
+    ArtistBioPageComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

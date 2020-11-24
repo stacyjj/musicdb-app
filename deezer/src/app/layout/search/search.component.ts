@@ -29,13 +29,20 @@ export class SearchComponent implements OnInit{
     topTracks: null
   };
 
+  errorPage = false;
+  bioLoading = false;
+
   constructor(private _service: DeezerService, private router : Router, private eventEmitterService: EventEmitterService ) {}
 
   ngOnInit(): void{
     this.searchArtistForm.valueChanges.subscribe(searchItem => {
       this._service.getArtists(searchItem).subscribe(
-        searchResponse => searchItem ? this.artistList(Array.of(searchResponse)) : ''
-      );
+        searchResponse => {
+          searchItem ? this.artistList(Array.of(searchResponse)) : '';
+        },error => {
+          this.errorPage =true;
+          this.error();
+        });
     });
 
     if (this.eventEmitterService.subsVar==undefined) {    
@@ -64,6 +71,7 @@ export class SearchComponent implements OnInit{
 
 
   artistSelection(selectedArtist){
+    this.bioLoading = true;
     this._service.getTopTracks(selectedArtist.artistId?selectedArtist.artistId:selectedArtist.artist.id).subscribe(
       topTrackData => {
         this.toptracks = topTrackData;
@@ -76,14 +84,18 @@ export class SearchComponent implements OnInit{
               this.noOfFansData = fanData;
               this.bioDisplayData.noOfFans = this.noOfFansData.nb_fan;
               this.getAlbumReleaseDates(this.bioDisplayData);
-            }
-          );
+            },error => {
+              this.errorPage = true;
+              this. error();
+            });
         }else{
           this.bioDisplayData.noOfFans =  selectedArtist.noOfFans;
           this.getAlbumReleaseDates(this.bioDisplayData);
         }
-      }
-    );
+      },error => {
+        this.errorPage = true;
+        this. error();
+      });
   }
 
   getTime(time){
@@ -101,18 +113,28 @@ export class SearchComponent implements OnInit{
           this.albumDate = albumDate;
           selectedArtistDetails.topTracks[index].duration = this.getTime(selectedArtistDetails.topTracks[index].duration);
           selectedArtistDetails.topTracks[index].releaseDate = this.albumDate.release_date;
+          if(selectedArtistDetails.topTracks.length-1 === index){
+            this.loadBioPage(selectedArtistDetails);
+          }
+        },error => {
+          this.errorPage = true;
+          this. error();
         });
     });
-    this.loadBioPage(selectedArtistDetails);
+    
   }
-
-
+  
   loadBioPage(artistInfo){
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
     this.router.onSameUrlNavigation = 'reload';
+    this.bioLoading = false;
     this.router.navigate(["artist"],  { state: artistInfo });
+  }
+
+  error(){
+    this.router.navigate(["error"]);
   }
 
 }

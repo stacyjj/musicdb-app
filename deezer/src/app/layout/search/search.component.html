@@ -17,4 +17,14 @@
         </mat-autocomplete>
     </mat-form-field> 
 </div>
+<div *ngIf="!!bioLoading">
+    <div fxLayout="row" class="image-align">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div fxLayout="row" class="image-align">
+      <div fxLayout="row">
+        <label fxFlex><b>Loading . . . </b></label>
+      </div>
+    </div>
+  </div>
 

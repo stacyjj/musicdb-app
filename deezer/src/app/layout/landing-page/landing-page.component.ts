@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeezerService } from 'src/app/core/service/deezer-api/deezer.service';
 import {EventEmitterService} from 'src/app/core/service/common/event-emitter.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -13,9 +14,10 @@ export class LandingPageComponent implements OnInit {
   noOfFansData = null;
   displayData = [];
   pageLoading = true;
+  bioLoading = true;
   errorPage = false;
 
-  constructor(private _service: DeezerService, private eventEmitterService: EventEmitterService) { }
+  constructor(private _service: DeezerService, private eventEmitterService: EventEmitterService, private router : Router) { }
 
   ngOnInit(): void{
     this.pageLoading = true;
@@ -24,6 +26,7 @@ export class LandingPageComponent implements OnInit {
         this.chartDataList(Array.of(chartData))
       },error => {
         this.errorPage = true;
+        this.error();
       });
   }
 
@@ -46,12 +49,16 @@ export class LandingPageComponent implements OnInit {
           }
         },error => {
           this.errorPage = true;
+          this.error();
         });
     });
   }
 
   artistSelection(artistDetails){    
     this.eventEmitterService.getArtistBio(artistDetails);    
-  }  
+  } 
 
+  error(){
+    this.router.navigate(["error"]);
+  }
 }
