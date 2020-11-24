@@ -12,18 +12,24 @@ export class LandingPageComponent implements OnInit {
   chartData = [];
   noOfFansData = null;
   displayData = [];
+  pageLoading = true;
+  errorPage = false;
 
   constructor(private _service: DeezerService, private eventEmitterService: EventEmitterService) { }
 
   ngOnInit(): void{
+    this.pageLoading = true;
     this._service.getChart().subscribe(
-      chartData => this.chartDataList(Array.of(chartData))
-    );
+      chartData => {
+        this.chartDataList(Array.of(chartData))
+      },error => {
+        this.errorPage = true;
+      });
   }
 
   chartDataList(chartData){
     this.chartData = chartData[0].data;
-    this.chartData.forEach(element => {
+    this.chartData.forEach((element,index) => {
       this._service.getNoOfFans(element.artist.id).subscribe(
         fanData => {
           this.noOfFansData = fanData;
@@ -35,8 +41,12 @@ export class LandingPageComponent implements OnInit {
             artistId: element.artist.id,
             noOfFans:  this.noOfFansData.nb_fan
           });
-        }
-      );
+          if(this.chartData.length-1 === index){
+            this.pageLoading = false;
+          }
+        },error => {
+          this.errorPage = true;
+        });
     });
   }
 
