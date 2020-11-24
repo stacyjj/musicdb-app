@@ -40,9 +40,9 @@ export class LandingPageComponent implements OnInit {
             coverTitle: element.album.title,
             coverImg: element.album.cover_xl,
             artistImg: element.artist.picture_medium,
-            artistName:element.artist.name,
+            artistName: element.artist.name,
             artistId: element.artist.id,
-            noOfFans:  this.noOfFansData.nb_fan
+            noOfFans: this.noOfFansData.nb_fan
           });
           if(this.chartData.length-1 === index){
             this.pageLoading = false;

@@ -22,15 +22,14 @@ export class SearchComponent implements OnInit{
   noOfFansData = null;
   toptracks = null;
   albumDate = null;
+  errorPage = false;
+  bioLoading = false;
   bioDisplayData = {
     artistName: '',
     noOfFans: '',
     artistImg: '',
     topTracks: null
   };
-
-  errorPage = false;
-  bioLoading = false;
 
   constructor(private _service: DeezerService, private router : Router, private eventEmitterService: EventEmitterService ) {}
 
@@ -45,9 +44,9 @@ export class SearchComponent implements OnInit{
         });
     });
 
-    if (this.eventEmitterService.subsVar==undefined) {    
-      this.eventEmitterService.subsVar = this.eventEmitterService.    
-      invokeGetArtistBioFunction.subscribe((artist) => {    
+    if (this.eventEmitterService.subsVar == undefined) {    
+      this.eventEmitterService.subsVar = this.eventEmitterService.invokeGetArtistBioFunction.subscribe(
+        (artist) => {    
         this.artistSelection(artist);    
       });    
     }   
@@ -57,7 +56,7 @@ export class SearchComponent implements OnInit{
     this.artists = searchResponse[0].data;
     this.filteredArtists = this.searchArtistForm.valueChanges.pipe(
       startWith(''),
-      map(value =>this.filter(value))
+      map(value => this.filter(value))
     );
   }
 
@@ -89,7 +88,7 @@ export class SearchComponent implements OnInit{
               this. error();
             });
         }else{
-          this.bioDisplayData.noOfFans =  selectedArtist.noOfFans;
+          this.bioDisplayData.noOfFans = selectedArtist.noOfFans;
           this.getAlbumReleaseDates(this.bioDisplayData);
         }
       },error => {
