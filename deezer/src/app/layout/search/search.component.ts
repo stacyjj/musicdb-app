@@ -121,6 +121,9 @@ export class SearchComponent implements OnInit{
           this. error();
         });
     });
+    if(selectedArtistDetails.topTracks.length === 0){
+      this.loadBioPage(selectedArtistDetails);
+    }
     
   }
   
