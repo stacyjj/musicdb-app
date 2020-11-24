@@ -14,7 +14,6 @@ export class LandingPageComponent implements OnInit {
   noOfFansData = null;
   displayData = [];
   pageLoading = true;
-  bioLoading = true;
   errorPage = false;
 
   constructor(private _service: DeezerService, private eventEmitterService: EventEmitterService, private router : Router) { }
@@ -25,6 +24,7 @@ export class LandingPageComponent implements OnInit {
       chartData => {
         this.chartDataList(Array.of(chartData))
       },error => {
+        this.pageLoading = false;
         this.errorPage = true;
         this.error();
       });
@@ -48,6 +48,7 @@ export class LandingPageComponent implements OnInit {
             this.pageLoading = false;
           }
         },error => {
+          this.pageLoading = false;
           this.errorPage = true;
           this.error();
         });

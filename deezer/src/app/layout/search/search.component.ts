@@ -39,7 +39,8 @@ export class SearchComponent implements OnInit{
         searchResponse => {
           searchItem ? this.artistList(Array.of(searchResponse)) : '';
         },error => {
-          this.errorPage =true;
+          this.bioLoading = false;
+          this.errorPage = true;
           this.error();
         });
     });
@@ -84,6 +85,7 @@ export class SearchComponent implements OnInit{
               this.bioDisplayData.noOfFans = this.noOfFansData.nb_fan;
               this.getAlbumReleaseDates(this.bioDisplayData);
             },error => {
+              this.bioLoading = false;
               this.errorPage = true;
               this. error();
             });
@@ -92,6 +94,7 @@ export class SearchComponent implements OnInit{
           this.getAlbumReleaseDates(this.bioDisplayData);
         }
       },error => {
+        this.bioLoading = false;
         this.errorPage = true;
         this. error();
       });
@@ -116,6 +119,7 @@ export class SearchComponent implements OnInit{
             this.loadBioPage(selectedArtistDetails);
           }
         },error => {
+          this.bioLoading = false;
           this.errorPage = true;
           this. error();
         });
